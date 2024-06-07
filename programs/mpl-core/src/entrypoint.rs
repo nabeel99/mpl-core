@@ -8,7 +8,7 @@ use crate::{error::MplCoreError, processor};
 entrypoint!(process_instruction);
 
 /// Entrypoint function
-fn process_instruction<'a>(
+ fn process_instruction<'a>(
     program_id: &'a Pubkey,
     accounts: &'a [AccountInfo<'a>],
     instruction_data: &[u8],

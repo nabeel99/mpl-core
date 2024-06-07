@@ -62,6 +62,9 @@ impl UpdateAuthority {
                 let authority_info = match ctx.authority {
                     Some(authority) => {
                         assert_signer(authority)?;
+                        solana_program::msg!("authority is a signer");
+                        // solana_program::msg!("authority is {}",authority_info.key());
+
                         authority
                     }
                     None => ctx.payer,
@@ -71,8 +74,10 @@ impl UpdateAuthority {
                     collection_info,
                     PluginType::UpdateDelegate,
                 );
-
+                //tars _ authority
                 if let Ok((authority, _, _)) = maybe_update_delegate {
+                    // solana_program::msg!("authority is {}",authority);
+
                     if assert_collection_authority(&collection, authority_info, &authority).is_err()
                         && assert_collection_authority(
                             &collection,
@@ -81,10 +86,12 @@ impl UpdateAuthority {
                         )
                         .is_err()
                     {
+                        solana_program::msg!("rejecting here1");
                         solana_program::msg!("UA: Rejected");
                         return Ok(ValidationResult::Rejected);
                     }
                 } else if authority_info.key != &collection.update_authority {
+                    solana_program::msg!("rejecting here2");
                     solana_program::msg!("UA: Rejected");
                     return Ok(ValidationResult::Rejected);
                 }
